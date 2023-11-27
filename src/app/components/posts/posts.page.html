@@ -1,0 +1,131 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <div style="display: flex; justify-content: space-around;">
+      <ion-title>Posts</ion-title>
+      <ion-button (click)="logout()" [strong]="true">Salir</ion-button>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button id="open-modal" expand="block">
+      <i class="fa-solid fa-plus"></i>
+    </ion-fab-button>
+  </ion-fab>
+  <table>
+    <thead>
+      <tr>
+        <th>City</th>
+        <th>Price</th>
+        <th>Adress</th>
+        <th>Bedrooms</th>
+        <th>Rooms</th>
+        <th>Province</th>
+        <th>Population</th>
+        <th>Long</th>
+        <th>Lat</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of history; track $index) {
+      <tr>
+        <td style="white-space: nowrap;">{{item.city}}</td>
+        <td>{{item.price}}</td>
+        <td style="white-space: nowrap;">{{item.address}}</td>
+        <td>{{item.numOfBedrooms}}</td>
+        <td>{{item.numOfBathrooms}}</td>
+        <td style="white-space: nowrap;">{{item.provice}}</td>
+        <td>{{item.Population}}</td>
+        <td>{{item.longitude}}</td>
+        <td>{{item.latitude}}</td>
+        <td>
+          <i class="fa-regular fa-pen-to-square" style="cursor: pointer;" (click)="getByID(item.id)"></i>
+          &nbsp;
+          <i class="fa-sharp fa-solid fa-trash" style="cursor: pointer;"
+            (click)="selectedID = item.id; isAlertOpen = true"></i>
+        </td>
+      </tr>
+      }
+      <!-- Agrega más filas según sea necesario -->
+    </tbody>
+  </table>
+
+  <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button (click)="cancel()">Cancel</ion-button>
+          </ion-buttons>
+          <ion-title style="text-align: center;">Nuevo post</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <form [formGroup]="form">
+          <ion-item>
+            <ion-label position="stacked">City</ion-label>
+            <ion-input formControlName="city" type="text" placeholder="Sample City"></ion-input>
+          </ion-item>
+          <br>
+          <ion-item>
+            <ion-label position="stacked">Price</ion-label>
+            <ion-input formControlName="price" type="number" placeholder="150000"></ion-input>
+          </ion-item>
+          <br>
+
+          <ion-item>
+            <ion-label position="stacked">Address</ion-label>
+            <ion-input formControlName="address" type="text" placeholder="123 Main Street"></ion-input>
+          </ion-item>
+          <br>
+
+          <ion-item>
+            <ion-label position="stacked">Bedrooms</ion-label>
+            <ion-input formControlName="numOfBedrooms" type="number" placeholder="3"></ion-input>
+          </ion-item>
+          <br>
+
+          <ion-item>
+            <ion-label position="stacked">Rooms</ion-label>
+            <ion-input formControlName="numOfBathrooms" type="number" placeholder="2"></ion-input>
+          </ion-item>
+          <br>
+
+          <ion-item>
+            <ion-label position="stacked">Province</ion-label>
+            <ion-input formControlName="provice" type="text" placeholder="Sample Province"></ion-input>
+          </ion-item>
+          <br>
+
+          <ion-item>
+            <ion-label position="stacked">Population</ion-label>
+            <ion-input formControlName="Population" type="number" placeholder="100000"></ion-input>
+          </ion-item>
+          <br>
+
+          <ion-item>
+            <ion-label position="stacked">Longitude</ion-label>
+            <ion-input formControlName="longitude" type="number" placeholder="123.456"></ion-input>
+          </ion-item>
+          <br>
+
+          <ion-item>
+            <ion-label position="stacked">Latitude</ion-label>
+            <ion-input formControlName="latitude" type="number" placeholder="123.456"></ion-input>
+          </ion-item>
+
+        </form>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <ion-alert [isOpen]="isAlertOpen" message="Esta seguro de eliminar?" [buttons]="alertButtons"
+    (didDismiss)="isAlertOpen = false"></ion-alert>
+
+
+</ion-content>

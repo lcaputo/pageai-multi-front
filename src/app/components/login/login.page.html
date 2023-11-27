@@ -1,0 +1,23 @@
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Login</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <div id="background-content">
+    <ion-text>
+      <h1>Acceso</h1>
+    </ion-text>
+    <form [formGroup]="loginForm" (submit)="login()" class="ion-justify-content-center"
+      style="width: 100%; max-width: 300px;">
+
+      <ion-input formControlName="email" label="Email" label-placement="floating" fill="outline"
+        placeholder="Enter text"></ion-input>
+      <br>
+      <ion-input formControlName="password" label="Password" label-placement="floating" fill="outline"
+        placeholder="Enter text"></ion-input>
+      <br>
+      <ion-button type="submit" expand="block">Entrar</ion-button>
+    </form>
+  </div>
+</ion-content>

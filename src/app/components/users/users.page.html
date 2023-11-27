@@ -1,0 +1,77 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Usuarios</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button id="open-modal" expand="block">
+      <i class="fa-solid fa-plus"></i>
+    </ion-fab-button>
+  </ion-fab>
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of users; track $index) {
+      <tr>
+        <td>{{item.name}}</td>
+        <td>{{item.email}}</td>
+        <td>
+          <i class="fa-regular fa-pen-to-square" style="cursor: pointer;" (click)="getByID(item.id)"></i>
+          &nbsp;
+          <i class="fa-sharp fa-solid fa-trash" style="cursor: pointer;" (click)="selectedID = item.id; isAlertOpen = true"></i>
+        </td>
+      </tr>
+      }
+      <!-- Agrega más filas según sea necesario -->
+    </tbody>
+  </table>
+
+  <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button (click)="cancel()">Cancel</ion-button>
+          </ion-buttons>
+          <ion-title style="text-align: center;">Nuevo usuario</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <form [formGroup]="form">
+          <ion-item>
+            <ion-input formControlName="name" label="Nombre completo" labelPlacement="stacked" type="text"
+              placeholder="Juan Perez"></ion-input>
+          </ion-item>
+          <br>
+          <ion-item>
+            <ion-input formControlName="email" label="Email" labelPlacement="stacked" type="email"
+              placeholder="jperez@gmail.com"></ion-input>
+          </ion-item>
+          <br>
+          <ion-item>
+            <ion-input formControlName="password" label="Password" labelPlacement="stacked" type="password"
+              placeholder="********"></ion-input>
+          </ion-item>
+        </form>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <ion-alert [isOpen]="isAlertOpen"
+    message="Esta seguro de eliminar?" [buttons]="alertButtons"
+
+    (didDismiss)="isAlertOpen = false"></ion-alert>
+
+
+</ion-content>
